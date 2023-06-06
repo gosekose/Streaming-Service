@@ -3,6 +3,7 @@ package com.server.streaming.domain.lecture;
 import com.server.streaming.domain.BaseEntity;
 import com.server.streaming.domain.Member;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +28,14 @@ public class Lecture extends BaseEntity {
 
     @Lob
     private String description;
+
+    private Long price; // 가격이 0원인 경우 무료강의
+
+    @Builder
+    public Lecture(Member provider, String lectureName, String description, Long price) {
+        this.provider = provider;
+        this.lectureName = lectureName;
+        this.description = description;
+        this.price = price;
+    }
 }
