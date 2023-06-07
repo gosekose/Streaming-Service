@@ -1,7 +1,7 @@
 package com.server.streaming.service;
 
-import com.server.streaming.domain.lecture.Lecture;
-import com.server.streaming.repository.MemberRepository;
+import com.server.streaming.domain.member.Member;
+import com.server.streaming.repository.rdbms.MemberRepository;
 import com.server.streaming.service.dto.AuthTokenDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,5 +21,9 @@ public class MemberService {
 
     public void logout() {
 
+    }
+
+    public Member findMemberById(Long id) {
+        return memberRepository.findById(id).orElseThrow();
     }
 }

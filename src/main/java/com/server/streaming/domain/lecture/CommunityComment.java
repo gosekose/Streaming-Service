@@ -1,7 +1,7 @@
 package com.server.streaming.domain.lecture;
 
 import com.server.streaming.domain.BaseEntity;
-import com.server.streaming.domain.Member;
+import com.server.streaming.domain.member.Member;
 import com.server.streaming.domain.lecture.enums.PublicStatus;
 import jakarta.persistence.*;
 import lombok.Builder;

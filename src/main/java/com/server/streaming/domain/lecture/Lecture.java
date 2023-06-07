@@ -1,13 +1,11 @@
 package com.server.streaming.domain.lecture;
 
 import com.server.streaming.domain.BaseEntity;
-import com.server.streaming.domain.Member;
+import com.server.streaming.domain.member.Member;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 import static jakarta.persistence.FetchType.*;
 
