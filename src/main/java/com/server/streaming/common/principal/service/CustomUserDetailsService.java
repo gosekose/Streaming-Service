@@ -5,7 +5,7 @@ import com.server.streaming.common.principal.converter.ProviderUserConverter;
 import com.server.streaming.common.principal.converter.ProviderUserRequest;
 import com.server.streaming.common.principal.social.ProviderUser;
 import com.server.streaming.domain.member.Member;
-import com.server.streaming.service.member.MemberPolicy;
+import com.server.streaming.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,14 +16,14 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class CustomUserDetailsService extends AbstractOAuth2UserService implements UserDetailsService {
 
-    public CustomUserDetailsService(MemberPolicy memberPolicy, ProviderUserConverter<ProviderUserRequest,
+    public CustomUserDetailsService(MemberService memberService, ProviderUserConverter<ProviderUserRequest,
                 ProviderUser> providerUserConverter) {
-        super(memberPolicy, providerUserConverter);
+        super(memberService, providerUserConverter);
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Member member = getMemberPolicy().findMemberByEmail(email);
+        Member member = getMemberService().findMemberByEmail(email);
 
         if (member == null) {
             throw new UsernameNotFoundException("존재하지 않는 회원입니다.");

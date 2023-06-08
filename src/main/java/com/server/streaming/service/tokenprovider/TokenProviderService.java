@@ -6,7 +6,7 @@ import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
-public interface TokenProviderPolicy {
+public interface TokenProviderService {
 
     String TOKEN_TYPE = "Bearer ";
 

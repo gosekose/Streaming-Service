@@ -7,7 +7,7 @@ import com.server.streaming.domain.member.Member;
 import com.server.streaming.domain.session.LoginSession;
 import com.server.streaming.repository.redis.LoginSessionRepository;
 import com.server.streaming.service.dto.AuthTokenDto;
-import com.server.streaming.service.token.TokenPolicy;
+import com.server.streaming.service.token.TokenService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,10 +18,10 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class LoginSessionPolicyImpl implements LoginSessionPolicy {
+public class LoginSessionServiceImpl implements LoginSessionService {
 
     private final LoginSessionRepository loginSessionRepository;
-    private final TokenPolicy tokenPolicy;
+    private final TokenService tokenService;
 
     @Value("${jwt.access-expiration-time}")
     private Long expiration;
@@ -33,11 +33,11 @@ public class LoginSessionPolicyImpl implements LoginSessionPolicy {
 
         if (isDoubleLogin(member.getUserId())) {
             logoutSession(member.getUserId());
-            tokenPolicy.saveLogoutTokensAndDeleteSavedTokens(member.getUserId());
+            tokenService.saveLogoutTokensAndDeleteSavedTokens(member.getUserId());
         }
         loginSession(member.getUserId(), remoteAddr);
 
-        return tokenPolicy.createAuthToken(member.getUserId(), authorities);
+        return tokenService.createAuthToken(member.getUserId(), authorities);
     }
 
     @Override

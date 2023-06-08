@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class TokenProviderPolicyImpl implements InitializingBean, TokenProviderPolicy {
+public class TokenProviderServiceImpl implements InitializingBean, TokenProviderService {
 
     public static final String TOKEN_TYPE = "Bearer ";
     private static final String AUTHORITIES_KEY = "auth";
@@ -36,7 +36,7 @@ public class TokenProviderPolicyImpl implements InitializingBean, TokenProviderP
 
     private Key key;
 
-    public TokenProviderPolicyImpl(
+    public TokenProviderServiceImpl(
             @Value("${jwt.secret}") String secretKey,
             @Value("${jwt.access-expiration-time}") long accessTokenExpirationTime,
             @Value("${jwt.refresh-expiration-time}") long refreshTokenExpirationTime,

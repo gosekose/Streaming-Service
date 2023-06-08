@@ -5,7 +5,7 @@ import com.server.streaming.domain.token.*;
 import com.server.streaming.exception.exception.BadJwtRequestException;
 import com.server.streaming.repository.redis.LoginSessionRepository;
 import com.server.streaming.repository.redis.TokenRepository;
-import com.server.streaming.service.tokenprovider.TokenProviderPolicyImpl;
+import com.server.streaming.service.tokenprovider.TokenProviderServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ public class AuthenticationGiveFilter extends OncePerRequestFilter {
     private static final String REFRESHTOKEN_HEADER = "RefreshToken";
     private static final String USER_ID_HEADER = "UserId";
 
-    private final TokenProviderPolicyImpl tokenProvider;
+    private final TokenProviderServiceImpl tokenProvider;
     private final TokenRepository tokenRepository;
     private final LoginSessionRepository loginSessionRepository;
 

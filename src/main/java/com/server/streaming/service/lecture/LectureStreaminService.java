@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LectureStreamingPolicy {
+public class LectureStreaminService {
 
     private final LectureRepository lectureRepository;
     private final LectureListRepository lectureListRepository;

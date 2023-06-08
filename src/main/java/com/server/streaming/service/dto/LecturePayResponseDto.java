@@ -1,4 +1,4 @@
 package com.server.streaming.service.dto;
 
-public class PayResponseFromServerDto {
+public class LecturePayResponseDto {
 }

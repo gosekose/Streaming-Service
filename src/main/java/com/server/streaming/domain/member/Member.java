@@ -10,6 +10,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor
+@Table(indexes = {
+        @Index(name = "member_user_id_index", columnList = "userId")
+})
 public class Member extends BaseEntity {
 
     @Id @GeneratedValue

@@ -7,8 +7,8 @@ import com.server.streaming.exception.exception.DoubleLoginException;
 import com.server.streaming.exception.exception.NotExistRefreshTokenException;
 import com.server.streaming.repository.redis.TokenRepositoryImpl;
 import com.server.streaming.service.dto.AuthTokenDto;
-import com.server.streaming.service.member.MemberPolicy;
-import com.server.streaming.service.tokenprovider.TokenProviderPolicy;
+import com.server.streaming.service.member.MemberService;
+import com.server.streaming.service.tokenprovider.TokenProviderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -19,11 +19,11 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class TokenPolicyImpl implements TokenPolicy {
+public class TokenServiceImpl implements TokenService {
 
     private final TokenRepositoryImpl tokenRepository;
-    private final TokenProviderPolicy tokenProviderPolicy;
-    private final MemberPolicy memberPolicy;
+    private final TokenProviderService tokenProviderService;
+    private final MemberService memberService;
 
     @Override
     public AuthTokenDto createAuthToken(String userId, List<Authority> authorities) throws JsonProcessingException {
@@ -37,7 +37,7 @@ public class TokenPolicyImpl implements TokenPolicy {
 
     @Override
     public AuthTokenDto createAuthToken(Authentication authentication) throws JsonProcessingException {
-        String accessToken = tokenProviderPolicy.createAccessToken(authentication);
+        String accessToken = tokenProviderService.createAccessToken(authentication);
         String newRefreshToken = createNewRefreshToken(authentication);
         return new AuthTokenDto(accessToken, newRefreshToken, getUserId(authentication));
     }
@@ -51,14 +51,14 @@ public class TokenPolicyImpl implements TokenPolicy {
     @Override
     public AuthTokenDto reissueAuthToken(String refreshToken) throws JsonProcessingException {
         String userId = getUserIdOrThrow(refreshToken);
-        Authentication authentication = tokenProviderPolicy.getAuthentication(refreshToken);
-        if (tokenProviderPolicy.isMoreThanReissueTime(refreshToken))
-            return AuthTokenDto.of(tokenProviderPolicy.createAccessToken(authentication),
+        Authentication authentication = tokenProviderService.getAuthentication(refreshToken);
+        if (tokenProviderService.isMoreThanReissueTime(refreshToken))
+            return AuthTokenDto.of(tokenProviderService.createAccessToken(authentication),
                     refreshToken, getUserId(authentication));
 
         deleteTokenByType(refreshToken, userId, RefreshToken.class);
         return AuthTokenDto.of(
-                tokenProviderPolicy.createAccessToken(authentication),
+                tokenProviderService.createAccessToken(authentication),
                 createNewRefreshToken(authentication),
                 getUserId(authentication)
         );
@@ -119,11 +119,11 @@ public class TokenPolicyImpl implements TokenPolicy {
     }
 
     private AuthTokenDto saveAndGetToken(String userId, List<Authority> authorities) throws JsonProcessingException {
-        String accessToken = tokenProviderPolicy.createAccessToken(userId, authorities);
-        String refreshToken = tokenProviderPolicy.createRefreshToken(userId, authorities);
+        String accessToken = tokenProviderService.createAccessToken(userId, authorities);
+        String refreshToken = tokenProviderService.createRefreshToken(userId, authorities);
 
-        saveTokens(AccessToken.of(accessToken, userId, tokenProviderPolicy.getRemainingTimeFromToken(accessToken)),
-                RefreshToken.of(refreshToken, userId, tokenProviderPolicy.getRemainingTimeFromToken(refreshToken)));
+        saveTokens(AccessToken.of(accessToken, userId, tokenProviderService.getRemainingTimeFromToken(accessToken)),
+                RefreshToken.of(refreshToken, userId, tokenProviderService.getRemainingTimeFromToken(refreshToken)));
 
         return new AuthTokenDto(accessToken, refreshToken, userId);
     }
@@ -144,14 +144,14 @@ public class TokenPolicyImpl implements TokenPolicy {
     }
 
     private String getUserId(Authentication authentication) {
-        return memberPolicy.findByUserId(authentication.getName()).getUserId();
+        return memberService.findByUserId(authentication.getName()).getUserId();
     }
 
     private String createNewRefreshToken(Authentication authentication) throws JsonProcessingException {
-        String newRefreshToken = tokenProviderPolicy.createRefreshToken(authentication);
+        String newRefreshToken = tokenProviderService.createRefreshToken(authentication);
 
         RefreshToken refreshToken = RefreshToken.of(newRefreshToken, authentication.getName(),
-                tokenProviderPolicy.getRemainingTimeFromToken(newRefreshToken));
+                tokenProviderService.getRemainingTimeFromToken(newRefreshToken));
 
         tokenRepository.saveToken(refreshToken.getId(), refreshToken);
 

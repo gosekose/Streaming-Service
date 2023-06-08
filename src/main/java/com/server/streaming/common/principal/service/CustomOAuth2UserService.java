@@ -4,7 +4,7 @@ import com.server.streaming.common.principal.PrincipalUser;
 import com.server.streaming.common.principal.converter.ProviderUserConverter;
 import com.server.streaming.common.principal.converter.ProviderUserRequest;
 import com.server.streaming.common.principal.social.ProviderUser;
-import com.server.streaming.service.member.MemberPolicy;
+import com.server.streaming.service.member.MemberService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -19,9 +19,9 @@ import org.springframework.stereotype.Service;
 public class CustomOAuth2UserService extends AbstractOAuth2UserService implements
         OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
-    public CustomOAuth2UserService(MemberPolicy memberPolicy,
+    public CustomOAuth2UserService(MemberService memberService,
                                    ProviderUserConverter<ProviderUserRequest, ProviderUser> providerUserConverter) {
-        super(memberPolicy, providerUserConverter);
+        super(memberService, providerUserConverter);
     }
 
     @Override

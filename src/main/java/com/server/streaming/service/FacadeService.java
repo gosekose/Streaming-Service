@@ -8,9 +8,9 @@ import com.server.streaming.domain.member.Authority;
 import com.server.streaming.domain.member.Member;
 import com.server.streaming.exception.exception.UserRegisterConflictException;
 import com.server.streaming.service.dto.AuthTokenDto;
-import com.server.streaming.service.loginsession.LoginSessionPolicy;
-import com.server.streaming.service.member.MemberPolicy;
-import com.server.streaming.service.token.TokenPolicyImpl;
+import com.server.streaming.service.loginsession.LoginSessionService;
+import com.server.streaming.service.member.MemberService;
+import com.server.streaming.service.token.TokenServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -23,17 +23,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FacadeService {
 
-    private final MemberPolicy memberPolicy;
-    private final TokenPolicyImpl tokenPolicyImpl;
+    private final MemberService memberService;
+    private final TokenServiceImpl tokenPolicyImpl;
 
-    private final LoginSessionPolicy loginSessionPolicy;
+    private final LoginSessionService loginSessionService;
 
 
     /**
      * register
      */
     public void register(FormRegisterRequest request) {
-        if (!memberPolicy.register(RequestMapperFactory.mapper(request))) {
+        if (!memberService.register(RequestMapperFactory.mapper(request))) {
             throw new UserRegisterConflictException();
         }
     }
@@ -42,10 +42,10 @@ public class FacadeService {
      * login
      */
     public AuthTokenDto login(LoginFacadeRequest request) throws JsonProcessingException {
-        Member member = memberPolicy.findMemberByEmailOrThrow(RequestMapperFactory.mapper(request));
-        List<Authority> authorities = memberPolicy.findAuthorityByUserOrThrow(member);
+        Member member = memberService.findMemberByEmailOrThrow(RequestMapperFactory.mapper(request));
+        List<Authority> authorities = memberService.findAuthorityByUserOrThrow(member);
 
-        return loginSessionPolicy.loginNewSession(member, authorities, request.getRemoteAddr());
+        return loginSessionService.loginNewSession(member, authorities, request.getRemoteAddr());
     }
 
     /**

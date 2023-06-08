@@ -25,7 +25,7 @@ import static com.server.streaming.domain.member.Authorities.ROLE_USER;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class MemberPolicy {
+public class MemberService {
 
     private final MemberRepository memberRepository;
     private final AuthorityRepository authorityRepository;

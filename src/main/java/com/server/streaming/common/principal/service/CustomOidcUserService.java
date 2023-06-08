@@ -5,7 +5,7 @@ import com.server.streaming.common.principal.PrincipalUser;
 import com.server.streaming.common.principal.converter.ProviderUserConverter;
 import com.server.streaming.common.principal.converter.ProviderUserRequest;
 import com.server.streaming.common.principal.social.ProviderUser;
-import com.server.streaming.service.member.MemberPolicy;
+import com.server.streaming.service.member.MemberService;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserRequest;
 import org.springframework.security.oauth2.client.oidc.userinfo.OidcUserService;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
@@ -18,9 +18,9 @@ import org.springframework.stereotype.Service;
 public class CustomOidcUserService extends AbstractOAuth2UserService implements
         OAuth2UserService<OidcUserRequest, OidcUser>{
 
-    public CustomOidcUserService(MemberPolicy memberPolicy, ProviderUserConverter<ProviderUserRequest,
+    public CustomOidcUserService(MemberService memberService, ProviderUserConverter<ProviderUserRequest,
                 ProviderUser> providerUserConverter) {
-        super(memberPolicy, providerUserConverter);
+        super(memberService, providerUserConverter);
     }
 
     @Override

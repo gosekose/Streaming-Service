@@ -9,7 +9,6 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.SessionManagementConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -20,7 +19,7 @@ import com.server.streaming.controller.filter.AuthenticationGiveFilter;
 import com.server.streaming.controller.filter.LoginSessionFilter;
 import com.server.streaming.repository.redis.LoginSessionRepository;
 import com.server.streaming.repository.redis.TokenRepository;
-import com.server.streaming.service.tokenprovider.TokenProviderPolicyImpl;
+import com.server.streaming.service.tokenprovider.TokenProviderServiceImpl;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
@@ -34,7 +33,7 @@ public class SecurityConfig {
     private final CustomOidcUserService customOidcUserService;
     private final CorsFilter corsFilter;
 
-    private final TokenProviderPolicyImpl tokenProvider;
+    private final TokenProviderServiceImpl tokenProvider;
     private final TokenRepository tokenRepository;
     private final LoginSessionRepository loginSessionRepository;
     private final FilterRegistrationBean<LoginSessionFilter> loginSessionFilter;

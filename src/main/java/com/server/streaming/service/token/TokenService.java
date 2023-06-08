@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface TokenPolicy {
+public interface TokenService {
 
     AuthTokenDto createAuthToken(String userId, List<Authority> authorities) throws JsonProcessingException;
 

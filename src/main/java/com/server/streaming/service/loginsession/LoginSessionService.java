@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public interface LoginSessionPolicy {
+public interface LoginSessionService {
 
     AuthTokenDto loginNewSession(Member member, List<Authority> authorities, String remoteAddr)
             throws JsonProcessingException;
