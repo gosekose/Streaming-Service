@@ -1,7 +1,7 @@
 package com.server.streaming.service.lecture;
 
-import com.server.streaming.repository.rdbms.LectureListRepository;
-import com.server.streaming.repository.rdbms.LectureRepository;
+import com.server.streaming.repository.rdbms.lecture.LectureListRepository;
+import com.server.streaming.repository.rdbms.lecture.LectureRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

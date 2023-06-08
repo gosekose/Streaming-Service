@@ -3,11 +3,13 @@ package com.server.streaming.domain.discount;
 import com.server.streaming.domain.BaseEntity;
 import com.server.streaming.domain.lecture.Lecture;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.FetchType.LAZY;
 
 @Entity
+@Getter
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @DiscriminatorColumn(name = "discoint_type")
@@ -24,4 +26,6 @@ public abstract class Discount extends BaseEntity {
     public Discount(Lecture lecture) {
         this.lecture = lecture;
     }
+
+    public abstract long getDiscountedAmount();
 }

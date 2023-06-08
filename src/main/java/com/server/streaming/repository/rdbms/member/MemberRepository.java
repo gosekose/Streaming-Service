@@ -1,4 +1,4 @@
-package com.server.streaming.repository.rdbms;
+package com.server.streaming.repository.rdbms.member;
 
 import com.server.streaming.domain.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -43,4 +43,5 @@ public class Coupon extends BaseEntity {
         this.provider = provider;
         this.isUsed = isUsed;
     }
+
 }
