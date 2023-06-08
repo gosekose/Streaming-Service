@@ -28,7 +28,7 @@ public interface TokenProviderPolicy {
 
     Authentication getAuthentication(String token);
 
-    boolean validateToken(String authToken);
+    boolean validateToken(String authToken, String userId);
 
     String removeType(String token);
 

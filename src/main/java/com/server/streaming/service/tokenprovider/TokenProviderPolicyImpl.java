@@ -3,6 +3,7 @@ package com.server.streaming.service.tokenprovider;
 import com.server.streaming.domain.member.Authority;
 import com.server.streaming.exception.exception.BadJwtRequestException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
@@ -120,14 +121,15 @@ public class TokenProviderPolicyImpl implements InitializingBean, TokenProviderP
 
 
     @Override
-    public boolean validateToken(String token) {
+    public boolean validateToken(String token, String userId) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
+            Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            return isEqualDecodeIdAndUserId(claimsJws.getBody().getSubject(), userId);
         } catch (Exception e) {
             throw new BadJwtRequestException();
         }
     }
+
 
     @Override
     public String removeType(String token) {
@@ -179,5 +181,9 @@ public class TokenProviderPolicyImpl implements InitializingBean, TokenProviderP
         List<String> roles = new ArrayList<>();
         authorities.forEach(role -> roles.add(role.getAuthorities().getAuthoritiesName()));
         return roles;
+    }
+
+    private boolean isEqualDecodeIdAndUserId(String token, String userId) {
+        return token.equals(userId);
     }
 }
