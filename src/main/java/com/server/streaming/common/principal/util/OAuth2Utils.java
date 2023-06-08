@@ -45,7 +45,7 @@ public class OAuth2Utils {
 
         Attributes attributes;
         String registrationId = auth2AuthenticationToken.getAuthorizedClientRegistrationId();
-        OAuth2User oAuth2User = principalUser.getProviderUser().getOAuth2User();
+        OAuth2User oAuth2User = principalUser.providerUser().getOAuth2User();
 
         switch (registrationId.toLowerCase()) {
 

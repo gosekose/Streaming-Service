@@ -13,10 +13,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.Collection;
 import java.util.Map;
 
-@Getter
-@RequiredArgsConstructor
 public record PrincipalUser(ProviderUser providerUser) implements UserDetails, OidcUser, OAuth2User {
-
     @Override
     public String getName() {
         return providerUser.getUsername();

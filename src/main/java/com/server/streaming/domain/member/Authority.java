@@ -1,5 +1,6 @@
 package com.server.streaming.domain.member;
 
+import com.server.streaming.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.domain.Persistable;

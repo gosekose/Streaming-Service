@@ -53,7 +53,7 @@ public class MemberPolicy {
     }
 
     public Member findMemberByEmail(String email) {
-        return memberRepository.findMemberById(email);
+        return memberRepository.findMemberByEmail(email);
     }
 
     @Transactional

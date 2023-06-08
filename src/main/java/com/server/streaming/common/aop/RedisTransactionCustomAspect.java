@@ -1,6 +1,6 @@
 package com.server.streaming.common.aop;
 
-import liar.memberservice.member.service.dto.AuthTokenDto;
+import com.server.streaming.service.dto.AuthTokenDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -33,7 +33,8 @@ public class RedisTransactionCustomAspect {
         return redisConnection;
     }
 
-    @Around("")
+    @Around("com.server.streaming.common.aop.Pointcuts.transactionMethod() ||" +
+            "com.server.streaming.common.aop.Pointcuts.reissue()")
     public AuthTokenDto runWithAuthTokenTx(ProceedingJoinPoint joinPoint) throws Throwable {
         getRedisConnection().multi();
 
@@ -49,7 +50,7 @@ public class RedisTransactionCustomAspect {
     }
 
 
-    @Around("")
+    @Around("com.server.streaming.common.aop.Pointcuts.deleteAuthToken()")
     public void runWithDeleteTokenTx(ProceedingJoinPoint joinPoint) throws Throwable {
         getRedisConnection().multi();
         try {
@@ -60,6 +61,9 @@ public class RedisTransactionCustomAspect {
     }
 
     @AfterReturning(
+            "com.server.streaming.common.aop.Pointcuts.transactionMethod() ||" +
+            "com.server.streaming.common.aop.Pointcuts.reissue() ||" +
+            "com.server.streaming.common.aop.Pointcuts.deleteAuthToken()"
     )
     public void commitTx() {
         try {
@@ -72,6 +76,9 @@ public class RedisTransactionCustomAspect {
     }
 
     @AfterThrowing(
+            "com.server.streaming.common.aop.Pointcuts.transactionMethod() ||" +
+            "com.server.streaming.common.aop.Pointcuts.reissue() ||" +
+            "com.server.streaming.common.aop.Pointcuts.deleteAuthToken()"
     )
     public void rollbackTx() {
         try {

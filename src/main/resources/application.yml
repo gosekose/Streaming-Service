@@ -20,3 +20,17 @@ spring:
       hibernate:
         format_sql: true
     show-sql: true
+
+  main:
+    allow-bean-definition-overriding: true
+
+jwt:
+  header: Authorization
+  secret: 'AQA0R5Lb2yhUnQ0WNwCKnZBsJzUfEwv7QLuNzGmRdOV+5I8S6k6w3MUquTGmzKBAgbNbioIwY7Uz8joBqGSDUke1qD41R0OnpuTeM6IKrVuQiKUo6K0W0cUShecvPZVjLCyZs8ejTUhUJsejwZiaU+N6xaGNiG/ziky28sOWdajWIxzD0QCNsd8hISdzS21hPV5eXXZY/XB6i1xHiAsuH4SYWLATJB8hS8jd8+8pOFknUUlZbnJG3ndzrbcqBivBjW40jxS0f/Vlz5uoeEchvPVlGz+kQZ+stO/XWdYcBJBKYR7dIZSmlsPgwKHsA0jObmOvtc7rGjznAlYyrVQpZNY3A4tpohWqTe04ZaMtVOaVrgOA2gaxjd8UX2xiJoiCsqOrWh9Svscv06Hcs4gOOKVUQDB42plVXgykPe9SKMI2c6Xy8o8pAjPEzWuoMnL3SHcGyeRegrBFC3vKDzKnc2MvKXE6UpD4oaXx1vXzKP86TEq7BHNvoknp6DZoxqdJGcY15lIBt5F5Sjtn4IPmwfvAgLa/iHo/GH1hwnwa83QYnQ=='
+
+  # 6시간
+  access-expiration-time: 21600000
+  # 3일
+  reissue-refresh-time: 259200000
+  # 7일
+  refresh-expiration-time: 604800000

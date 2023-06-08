@@ -6,13 +6,13 @@ import org.aspectj.lang.annotation.Pointcut;
 @Slf4j
 public class Pointcuts {
 
-    @Pointcut("execution(* liar.memberservice.member.service.token.TokenPolicy.deleteAuthTokens(..))")
+    @Pointcut("execution(* com.server.streaming.service.token.TokenPolicy.deleteAuthTokens(..))")
     public void deleteAuthToken() {}
 
-    @Pointcut("execution(* liar.memberservice.member.service.token.TokenPolicy.reissueAuthToken(..))")
+    @Pointcut("execution(* com.server.streaming.service.token.TokenPolicy.reissueAuthToken(..))")
     public void reissue() {}
 
-    @Pointcut("@annotation(liar.memberservice.common.aop.anno.RedisTransactionalAuthTokenDto)")
+    @Pointcut("@annotation(com.server.streaming.common.aop.anno.RedisTransactionalAuthTokenDto)")
     public void transactionMethod() {};
 
 }

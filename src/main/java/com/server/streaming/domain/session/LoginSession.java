@@ -8,7 +8,8 @@ import org.springframework.data.redis.core.TimeToLive;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
-import static liar.memberservice.member.domain.session.LoginStatus.ON;
+import static com.server.streaming.domain.session.LoginStatus.ON;
+
 
 @Getter
 @NoArgsConstructor

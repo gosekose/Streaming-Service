@@ -1,4 +1,4 @@
-package com.server.streaming.service;
+package com.server.streaming.service.lecture;
 
 import com.server.streaming.repository.rdbms.LectureListRepository;
 import com.server.streaming.repository.rdbms.LectureRepository;
@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class LectureStreamingService {
+public class LectureStreamingPolicy {
 
     private final LectureRepository lectureRepository;
     private final LectureListRepository lectureListRepository;
